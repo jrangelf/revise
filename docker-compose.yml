@@ -1,0 +1,46 @@
+services:
+
+  revise:
+    container_name: revise
+    build:
+      context: .
+      dockerfile: dockerfile.revise
+    image: revise_cron    
+    #command: python3 bt_main.py 
+    #command: uwsgi --socket app:8000 --module acd_app.wsgi --master --enable-threads                        
+    #stdin_open: true
+    #tty: true
+    #command: tail -f /dev/null
+    #ports:
+    #  - '8000:8000'
+    networks:
+      - siscalc           
+    #depends_on:
+    #  - serpro
+    #  - api
+    #restart: on-failure
+    volumes:
+      - .:/revise
+      #- static_data:/app/static     
+    #env_file:
+    #  - ./env/revise.env
+
+  pgadmin4:
+    image: dpage/pgadmin4:8.4
+    container_name: pgadmin4
+    ports:
+      - "15432:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: api@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      - siscalc
+      
+
+networks:
+  siscalc:
+    external: true
+
+#volumes:
+#  static_data:    
+

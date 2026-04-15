@@ -1,0 +1,12 @@
+numpy==1.24.4
+python-decouple
+psycopg2-binary==2.8.6
+python-dateutil==2.8.2
+requests==2.27.1
+requests-file==1.5.1
+requests-toolbelt==0.9.1
+simplejson==3.17.6
+urllib3==1.26.9
+zeep==4.1.0
+pandas==2.0.3
+beautifulsoup4
