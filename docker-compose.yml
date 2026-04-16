@@ -14,7 +14,7 @@ services:
     #ports:
     #  - '8000:8000'
     networks:
-      - siscalc           
+      - indices           
     #depends_on:
     #  - serpro
     #  - api
@@ -34,11 +34,11 @@ services:
       PGADMIN_DEFAULT_EMAIL: api@gmail.com
       PGADMIN_DEFAULT_PASSWORD: admin
     networks:
-      - siscalc
+      - indices
       
 
 networks:
-  siscalc:
+  indices:
     external: true
 
 #volumes:

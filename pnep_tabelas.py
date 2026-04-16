@@ -22,7 +22,7 @@ class Tabelas:
         tabelas_para_processar = self.sqldata.marcar_tabelas_para_atualizacao(_data_atual)
         if tabelas_para_processar:
             return tabelas_para_processar
-        return None
+        return [] #None
         
     def buscar_codigo_bcb_indexadores(self, registros):
         codigos_bcb = self.sqldata.buscar_codigo_bcb_indexadores(registros)

@@ -25,7 +25,7 @@ apiindex = ApiIndex()
 _tabela_codigo_data_indexador = tabelas.obter_datas_atualizacao_tabelas()
 
 # atualiza a tabela logatualizacao com as datas dos ultimos registros das tabelas
-#_registros = tabelas.atualizar_datas_logatualizacao(_tabela_codigo_data_indexador)
+_registros = tabelas.atualizar_datas_logatualizacao(_tabela_codigo_data_indexador)
 
 # marcar tabelas que devem ser atualizadas no logatualizacao (codigo e data)        
 _tabelas_marcadas = tabelas.marcar_tabelas_para_atualizacao(datetools.dia_de_hoje())  
