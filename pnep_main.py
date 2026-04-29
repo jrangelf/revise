@@ -40,9 +40,10 @@ tabelas_atualizacao = [
     if codigo in mapa
 ]
 
-print(f'\nTabelas que devem ser atualizadas')
-for i in tabelas_atualizacao:
-    print(i)
+if tabelas_atualizacao:
+    print(f'\nTabelas que devem ser atualizadas')
+    for i in tabelas_atualizacao:
+        print(i)
 
 
 # Atualizar os indexadores

@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "indices",
+      "Group": "Servers",
+      "Host": "pgsqlapi",
+      "Port": 5432,
+      "MaintenanceDB": "indices",
+      "Username": "postgres",
+      "SSLMode": "prefer"
+    }
+  }
+}

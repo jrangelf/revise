@@ -7,8 +7,3 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # Backup sexta às 7h10
 10 7 * * 5 root /revise/backup.sh >> /revise/backup.log 2>&1
 
-
-# 0 7 * * 5 root docker exec -i db-api sh -c "pg_dump -U postgres indices > /db/backup/indices_$(date '+\%d-\%m-\%Y_\%H\%M\%S').sql"
-
-# Copiar backup sexta às 8h30
-# 30 8 * * 5 root /bin/bash -c 'docker cp db-api:/db/backup/$(docker exec db-api ls -t /db/backup | head -n 1) /revise/backup/'
