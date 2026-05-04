@@ -1,13 +1,13 @@
-from pnep_queries import QueriesSQL
-from pnep_conexao import Database
-from pnep_date_tools import DateTools
-from pnep_tabelas import Tabelas
-from pnep_api_bcb import ApiBcb
-from pnep_api_index import ApiIndex
-from pnep_sqldata import SQLData
-from pnep_indexadores import Indexadores
-from pnep_indices import Indices
-from pnep_juros import Juros
+from pnrj_queries import QueriesSQL
+from pnrj_conexao import Database
+from pnrj_date_tools import DateTools
+from pnrj_tabelas import Tabelas
+from pnrj_api_bcb import ApiBcb
+from pnrj_api_index import ApiIndex
+from pnrj_sqldata import SQLData
+from pnrj_indexadores import Indexadores
+from pnrj_indices import Indices
+from pnrj_juros import Juros
 
 queries = QueriesSQL()
 conexao = Database().conectar()
@@ -50,9 +50,9 @@ if tabelas_atualizacao:
 indexadores = Indexadores(datetools=datetools, tabelas=tabelas, apibcb=apibcb, tabelas_atualizar=tabelas_atualizacao)
 tabelas_bcb = indexadores.atualizar_indexadores()    
 
-# Atualizar os indices PNEP
+# Atualizar os indices PNRJ
 indices = Indices(datetools=datetools, tabelas=tabelas, apiindex=apiindex)
-tabelas_pnep = indices.atualizar_indices()
+tabelas_pnrj = indices.atualizar_indices()
 
 # Atualizar os juros
 juros = Juros(datetools=datetools, tabelas=tabelas, apiindex=apiindex)

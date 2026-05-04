@@ -2,8 +2,8 @@ SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Verificar todo dia às 7h
-0 7 * * * root /revise/run_verificar_data.sh >> /revise/pnep.log 2>&1
+0 7 * * * root /revise/run_verificar_data.sh >> /revise/pnrj.log 2>&1
 
 # Backup sexta às 7h10
-10 7 * * 5 root /revise/backup.sh >> /revise/backup.log 2>&1
+#10 7 * * 5 root /revise/backup.sh >> /revise/backup.log 2>&1
 

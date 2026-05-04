@@ -29,7 +29,7 @@ class DateTools:
         ''' 1. atualiza o campo processar para 1 caso a diferença de meses entre a data atual e a 
             data da ultima atualizacao de cada tabela de indexadores for maior ou igual a 2
             2. atualiza o campo processar para 1 caso a diferenca de meses entre a data atual e a 
-            data da ultima atualizacao de cada tabela de indices pnep for maior ou igual a 1        
+            data da ultima atualizacao de cada tabela de indices pnrj for maior ou igual a 1        
         '''
         # print(f"\n====================================")
         # print(f"codigo:{codigo}\ndata_atual:{data_atual}\ndata_log:{data_log}")

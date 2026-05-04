@@ -36,7 +36,7 @@ class Indexadores:
             tabela atualizada em logatualizacao
             registros = [('inpc', '2024-03-01'), 
                          ('ipca', '2024-03-01'), ... , 
-                         ('t202_tabela_pnep', '2021-12-01')] '''
+                         ('t202_tabela_pnrj', '2021-12-01')] '''
         #_registros = self.tabelas.atualizar_datas_logatualizacao(tabela_codigo_data_indexador)
         
         
@@ -189,7 +189,7 @@ class Indexadores:
     #         tabela atualizada em logatualizacao
     #         registros = [('inpc', '2024-03-01'), 
     #                      ('ipca', '2024-03-01'), ... , 
-    #                      ('t202_tabela_pnep', '2021-12-01')] '''
+    #                      ('t202_tabela_pnrj', '2021-12-01')] '''
     #     #_registros = self.tabelas.atualizar_datas_logatualizacao(tabela_codigo_data_indexador)
         
         

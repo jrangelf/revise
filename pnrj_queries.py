@@ -1,6 +1,6 @@
 class QueriesSQL:
 
-    ''' seleciona todas as tabelas de indexadores e de indices pnep '''
+    ''' seleciona todas as tabelas de indexadores e de indices pnrj '''
     consulta_1 = "SELECT nome, codigo, indexador FROM descricao_tabelas \
            WHERE codigo < 500" 
     
@@ -73,7 +73,7 @@ class QueriesSQL:
     ''' faz um insert de data e valor na tabela de indexador '''
     insercao_1 = "INSERT INTO $1(data, valor) VALUES ('$2', $3)"
 
-    ''' insere ultima linha na tabela de indice pnep '''
+    ''' insere ultima linha na tabela de indice pnrj '''
     insercao_2 = "INSERT INTO $1(data, indexador, numero_indice, fator_vigente, indice_correcao) \
                VALUES ('$2', '$3', $4, $5, $6)"   
     

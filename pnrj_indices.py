@@ -9,7 +9,7 @@ class Indices:
         self.apiindex = apiindex
         
     def carregar_tabela(self, nome_tabela):
-        registros = self.tabelas.carregar_tabela_pnep_indice(nome_tabela)
+        registros = self.tabelas.carregar_tabela_pnrj_indice(nome_tabela)
         if registros:
             return registros
         return None
@@ -34,7 +34,7 @@ class Indices:
             return None
         
         hoje = self.datetools.dia_de_hoje()        
-        print(f'\nTabelas de indices PNEP para atualizar:')
+        print(f'\nTabelas de indices PNRJ para atualizar:')
         
         for i in tabelas_agendadas:
             print (i)
@@ -66,7 +66,7 @@ class Indices:
                     print(f"indexador: {indexador.lower()}\nvalor: {valor}\nnumero_indice:{numero_indice}")
                     print(f"novo_fator_vigente: {novo_fator_vigente}")                       
                 
-                    tabela_pd = self.tabelas.carregar_tabela_pnep_indice(tabela)                       
+                    tabela_pd = self.tabelas.carregar_tabela_pnrj_indice(tabela)                       
                     df = pd.DataFrame(tabela_pd, columns=['data','indexador','variacao_mensal','numero_indice','fator_vigente','indice_correcao']) 
                             
                     # Alterar os valores da última linha
@@ -77,10 +77,10 @@ class Indices:
                     print("DataFrame atualizado:")
                     print(df)
                     
-                    reg = self.tabelas.atualizar_tabela_pnep_indice(tabela, df)
+                    reg = self.tabelas.atualizar_tabela_pnrj_indice(tabela, df)
                     
                     if reg:
-                        atualizada = self.tabelas.inserir_linha_tabela_indice_pnep(tabela,
+                        atualizada = self.tabelas.inserir_linha_tabela_indice_pnrj(tabela,
                                                                         proximo_mes,
                                                                         nome_index,
                                                                         novo_fator_vigente)

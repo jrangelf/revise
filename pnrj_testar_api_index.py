@@ -1,5 +1,5 @@
 import requests
-from pnep_api_index import ApiIndex
+from pnrj_api_index import ApiIndex
 
 api = ApiIndex()
 

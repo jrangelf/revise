@@ -1,5 +1,5 @@
 import psycopg2
-from pnep_constantes import *
+from pnrj_constantes import *
 
 class Singleton(type):
 

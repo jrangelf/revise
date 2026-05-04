@@ -16,9 +16,9 @@ ENV LANG=en_US.UTF-8
 COPY cron_job /etc/cron.d/cron_job
 RUN chmod 0644 /etc/cron.d/cron_job
 
+RUN crontab /etc/cron.d/cron_job
+
 COPY run_verificar_data.sh /revise/run_verificar_data.sh
-COPY backup.sh /revise/backup.sh
-RUN chmod +x /revise/backup.sh
 RUN chmod +x /revise/run_verificar_data.sh
 
 CMD ["cron", "-f"]

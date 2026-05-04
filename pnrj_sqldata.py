@@ -177,7 +177,7 @@ class SQLData:
             print(f"\nErro no update de data e processar na tabela logatualizacao: {e}\n({query_substituida})\n")
             return None
         
-    def carregar_tabela_pnep_indice(self, nome_tabela):
+    def carregar_tabela_pnrj_indice(self, nome_tabela):
         query_substituida = self.queries.consulta_8.replace('$', nome_tabela)
         registros = self.selecionar_multiplos(query_substituida)
         return registros
@@ -197,7 +197,7 @@ class SQLData:
         ultimo_registro = self.selecionar_simples(query_substituida)
         return ultimo_registro 
     
-    def atualizar_tabela_pnep_indice(self, nome_tabela, df):
+    def atualizar_tabela_pnrj_indice(self, nome_tabela, df):
         try:
             for index, row in df.iterrows():
                 data = row['data']  
@@ -212,7 +212,7 @@ class SQLData:
             return f"{nome_tabela}"
         except Exception as e:
             self.conexao.rollback()
-            print(f"Erro ao atualizar a tabela PNEP indice: {e}")            
+            print(f"Erro ao atualizar a tabela PNRJ indice: {e}")            
         return None
     
     def atualizar_tabela_poupanca(self, nome_tabela, data, meta_selic, taxa_mensal):
@@ -256,7 +256,7 @@ class SQLData:
             print(f"Erro ao atualizar a tabela selic: {e}")            
         return None
     
-    def inserir_linha_tabela_indice_pnep(self,
+    def inserir_linha_tabela_indice_pnrj(self,
                                          nome_tabela, 
                                          data, 
                                          indexador, 
@@ -271,7 +271,7 @@ class SQLData:
             return None
         except Exception as e:
             self.conexao.rollback()
-            print(f"\nErro ao inserir linha na tabela de indice pnep: {e}\n({query_substituida})\n")
+            print(f"\nErro ao inserir linha na tabela de indice pnrj: {e}\n({query_substituida})\n")
             return None
                 
     def inserir_linha_tabela_poupanca(self, nome_tabela, data):

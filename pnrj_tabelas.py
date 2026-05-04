@@ -42,8 +42,8 @@ class Tabelas:
             return True
         return None
     
-    def carregar_tabela_pnep_indice(self, nome_tabela):
-        tabela = self.sqldata.carregar_tabela_pnep_indice(nome_tabela)
+    def carregar_tabela_pnrj_indice(self, nome_tabela):
+        tabela = self.sqldata.carregar_tabela_pnrj_indice(nome_tabela)
         if tabela:
             return tabela
         return None
@@ -66,8 +66,8 @@ class Tabelas:
             return registro
         return None
     
-    def atualizar_tabela_pnep_indice(self, nome_tabela, df):
-        registro = self.sqldata.atualizar_tabela_pnep_indice (nome_tabela, df)
+    def atualizar_tabela_pnrj_indice(self, nome_tabela, df):
+        registro = self.sqldata.atualizar_tabela_pnrj_indice (nome_tabela, df)
         if registro:
             return registro
         return None
@@ -99,13 +99,13 @@ class Tabelas:
         return None
     
     
-    def inserir_linha_tabela_indice_pnep(self,
+    def inserir_linha_tabela_indice_pnrj(self,
                                          nome_tabela, 
                                          data, 
                                          indexador, 
                                          fator_vigente):
         
-        linha = self.sqldata.inserir_linha_tabela_indice_pnep(nome_tabela,
+        linha = self.sqldata.inserir_linha_tabela_indice_pnrj(nome_tabela,
                                                               data,
                                                               indexador,
                                                               fator_vigente)
