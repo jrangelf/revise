@@ -16,3 +16,5 @@ IPCA15 = config('IPCA15')
 SELICCOPOM = config('SELICCOPOM')
 TR = config('TR')
 
+HTTPINDICE = config('HTTPINDICE')
+
