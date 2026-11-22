@@ -1,0 +1,20 @@
+  243  cd ..
+  244  cd revise/
+  245  ls
+  246  cat pnrj.log
+  247  docker exec revise tail -n 30 /revise/pnrj.log
+  248  history
+  249  history tail -10
+  250  history tail -n 10
+  251  history
+  252  history | tail -n 10 >executar_tail_docker
+  251  history
+  252  history | tail -n 10 >executar_tail_docker
+  253  cat executar_tail_docker 
+  254  clear
+  255  ls
+  256  docker inspect pgsqldb --format '{{json .Mounts}}'
+  257  docker inspect pgsqlapi --format '{{json .Mounts}}'
+  258  ls
+  259  history
+  260  history | tail -n 10 >>executar_tail_docker

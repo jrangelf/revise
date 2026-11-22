@@ -32,11 +32,11 @@ _tabelas_marcadas = tabelas.marcar_tabelas_para_atualizacao(datetools.dia_de_hoj
 
 # gerar tabelas_para_atualizacao com (codigo, data, nome_tabela, codigo_indexador) 
 # que sao as tabelas que devem ser atualizadas
-mapa = {item[1]: (item[0], item[3]) for item in _tabela_codigo_data_indexador}
+mapa = {item[1]: (item[0], item[3]) for item in _tabela_codigo_data_indexador or []}
 
 tabelas_atualizacao = [
     (codigo, data, mapa[codigo][0], mapa[codigo][1])
-    for codigo, data in _tabelas_marcadas
+    for codigo, data in (_tabelas_marcadas or [])
     if codigo in mapa
 ]
 

@@ -5,7 +5,11 @@ services:
     build:
       context: .
       dockerfile: dockerfile.revise
-    image: revise_cron    
+    image: revise_cron
+
+    environment:
+      TZ: America/Sao_Paulo    
+    
     #command: python3 bt_main.py 
     #command: uwsgi --socket app:8000 --module acd_app.wsgi --master --enable-threads                        
     #stdin_open: true
@@ -26,7 +30,7 @@ services:
     #  - ./env/revise.env
 
   pgadmin4:
-    image: dpage/pgadmin4:8.4
+    image: dpage/pgadmin4:9.19
     container_name: pgadmin4
     ports:
       - "5050:80"
