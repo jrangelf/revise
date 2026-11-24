@@ -34,7 +34,7 @@ class Indices:
             return None
         
         hoje = self.datetools.dia_de_hoje()        
-        print(f'\nTabelas de indices PNRJ para atualizar:')
+        print(f'\nTabelas de indices PNEP para atualizar:')
         
         for i in tabelas_agendadas:
             print (i)

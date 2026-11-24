@@ -1,26 +1,27 @@
 
 class Indexadores:
 
-    def __init__(self, datetools, tabelas, apibcb, tabelas_atualizar):        
+    #def __init__(self, datetools, tabelas, apibcb, tabelas_atualizar):
+    def __init__(self, datetools, tabelas, apibcb):                
         self.datetools = datetools        
         self.tabelas = tabelas
         self.apibcb = apibcb
-        self.tabelas_atualizar = tabelas_atualizar 
+        #self.tabelas_atualizar = tabelas_atualizar 
     
-    # @staticmethod
-    # def agregar(lista1, lista2):
-    #     if lista1 and lista2:
-    #         # Criando um conjunto dos segundos elementos de lista1 para verificação rápida de correspondência            
-    #         set_lista1 = {item[1] for item in lista1}
+    @staticmethod
+    def agregar(lista1, lista2):
+        if lista1 and lista2:
+            # Criando um conjunto dos segundos elementos de lista1 para verificação rápida de correspondência            
+            set_lista1 = {item[1] for item in lista1}
             
-    #         # Usando compreensão de lista para criar lista3
-    #         lista3 = [(item2[0], item2[1], item1[0], item1[3]) 
-    #                 for item2 in lista2 
-    #                 for item1 in lista1 
-    #                 if item2[0] in set_lista1 and item1[1] == item2[0]]
+            # Usando compreensão de lista para criar lista3
+            lista3 = [(item2[0], item2[1], item1[0], item1[3]) 
+                    for item2 in lista2 
+                    for item1 in lista1 
+                    if item2[0] in set_lista1 and item1[1] == item2[0]]
             
-    #         return lista3
-    #     return None
+            return lista3
+        return [] #None
 
     def atualizar_indexadores(self):       
         print("\n")
@@ -29,7 +30,8 @@ class Indexadores:
         
         ''' tabela_codigo_data_indexador eh uma lista de tuplas com as datas de atualizacao das tabelas
             [('inpc', 100, '2024-03-01', 7),...] '''        
-        #tabela_codigo_data_indexador = self.tabelas.obter_datas_atualizacao_tabelas()
+        tabela_codigo_data_indexador = self.tabelas.obter_datas_atualizacao_tabelas()
+        
         
 
         ''' _registros recebe uma lista de tuplas com nome da tabela e o ultimo registro de data de cada
@@ -37,21 +39,28 @@ class Indexadores:
             registros = [('inpc', '2024-03-01'), 
                          ('ipca', '2024-03-01'), ... , 
                          ('t202_tabela_pnrj', '2021-12-01')] '''
-        #_registros = self.tabelas.atualizar_datas_logatualizacao(tabela_codigo_data_indexador)
+        _registros = self.tabelas.atualizar_datas_logatualizacao(tabela_codigo_data_indexador)
         
         
         # marcar tabelas para atualizacao        
-        #tabelas_marcadas_atualizacao = self.tabelas.marcar_tabelas_para_atualizacao(self.datetools.dia_de_hoje())        
+        tabelas_marcadas_atualizacao = self.tabelas.marcar_tabelas_para_atualizacao(self.datetools.dia_de_hoje())        
+        
+
+        if tabelas_marcadas_atualizacao:
             
-        
-        
-        
-        if self.tabelas_atualizar:
-                # retirar da lista de tabelas_para_processar as tabelas que nao sao de indexadores
-                filtrar_tabelas_indexadores = [tupla for tupla in self.tabelas_atualizar if tupla[0] < 200]
+            # incluir dois registros em cada tupla da lista (nome da tabela e codigo do indexador)
+            tab_marcadas_merge = Indexadores.agregar(tabela_codigo_data_indexador,
+                                                     tabelas_marcadas_atualizacao)
+                
+            # retirar da lista de tabelas_para_processar as tabelas que nao sao de indexadores
+            #filtrar_tabelas_indexadores = [tupla for tupla in self.tabelas_atualizar if tupla[0] < 200]
+                
+            if tab_marcadas_merge:
+            # retirar da lista de tabelas_para_processar as tabelas que nao sao de indexadores
+                filtrar_tabelas_indexadores = [tupla for tupla in tab_marcadas_merge if tupla[0] < 200]
                 
                 if filtrar_tabelas_indexadores:
-                    print(f'\nTabelas de indexadores para atualizar:')
+                    print(f'Tabelas de indexadores para atualizar:')
                     for registro in filtrar_tabelas_indexadores:
                         print(registro)                     
 
@@ -65,10 +74,9 @@ class Indexadores:
                         if atualizados is not None:
                             for registro in atualizados:
                                 print(f"{registro}")                        
-                            return atualizados
-        
-        return None
-
+                            return atualizados                                            
+        return [] #None
+    
     
     def buscar_indexadores(self, registros):        
         self.registros = registros       
@@ -76,11 +84,11 @@ class Indexadores:
         if self.registros:            
             # seleciona o codigo bcb dos indexadores     
             lista = self.tabelas.buscar_codigo_bcb_indexadores(registros)
-            
+
             ''' Da lista = [(104, '01/02/2024', 'tr', 8, '226'), (112, '01/02/2024', 'igpm', 12, '189')]
             Gerar um dicionario indexes = {'TR': ('01/02/2024', '226'), 'IGPM': ('01/02/2024', '189')} '''
             
-            indexes = {item[2].upper(): (item[1], item[4]) for item in lista}            
+            indexes = {item[2].upper(): (item[1], item[4]) for item in lista} 
             
             '''ha situações em que a API nao retorna erro, mas retorna valores espúrios,
             assim, a lista de indexadores nunca terá os elementos retirados até ficar vazia.
@@ -132,7 +140,9 @@ class Indexadores:
                     indexes = None        
         
         return indexadores_do_mes, lista
-    
+
+
+
     def inserir_novos_indexadores(self, indexadores, lista):
         
         ''' lista: [(102, '01/11/2023', 'ipca', 6, '433'), 
@@ -174,86 +184,3 @@ class Indexadores:
                     self.tabelas.zerar_processar(codigotab,dt_formatada)
             return tabelas_indexador_atualizadas
         return None
-
-    # def atualizar_indexadores(self):       
-    #     print("\n")
-    #     print("="*20+" LOG DE EVENTOS "+"="*24)
-    #     print(f"{self.datetools.dia_de_hoje().strftime('%d/%m/%Y %H:%M:%S')}\n")       
-        
-    #     ''' tabela_codigo_data_indexador eh uma lista de tuplas com as datas de atualizacao das tabelas
-    #         [('inpc', 100, '2024-03-01', 7),...] '''        
-    #     #tabela_codigo_data_indexador = self.tabelas.obter_datas_atualizacao_tabelas()
-        
-
-    #     ''' _registros recebe uma lista de tuplas com nome da tabela e o ultimo registro de data de cada
-    #         tabela atualizada em logatualizacao
-    #         registros = [('inpc', '2024-03-01'), 
-    #                      ('ipca', '2024-03-01'), ... , 
-    #                      ('t202_tabela_pnrj', '2021-12-01')] '''
-    #     #_registros = self.tabelas.atualizar_datas_logatualizacao(tabela_codigo_data_indexador)
-        
-        
-    #     # marcar tabelas para atualizacao        
-    #     #tabelas_marcadas_atualizacao = self.tabelas.marcar_tabelas_para_atualizacao(self.datetools.dia_de_hoje())        
-            
-        
-        
-        
-    #     if self.tabelas_atualizar:
-    #             # retirar da lista de tabelas_para_processar as tabelas que nao sao de indexadores
-    #             filtrar_tabelas_indexadores = [tupla for tupla in self.tabelas_atualizar if tupla[0] < 200]
-                
-    #             if filtrar_tabelas_indexadores:
-    #                 print(f'\nTabelas de indexadores para atualizar:')
-    #                 for registro in filtrar_tabelas_indexadores:
-    #                     print(registro)                     
-
-    #                 # obter os indexadores do mes que precisam ser atualizados
-    #                 indexadores_do_mes, lista = self.buscar_indexadores(filtrar_tabelas_indexadores)
-
-    #                 if indexadores_do_mes is not None:
-    #                     # indexadores_do_mes = [indexador, data retorno, valor, data busca']                       
-    #                     atualizados = self.inserir_novos_indexadores(indexadores_do_mes,lista)
-
-    #                     if atualizados is not None:
-    #                         for registro in atualizados:
-    #                             print(f"{registro}")                        
-    #                         return atualizados
-        
-    #     return None
-    
-        # if tabelas_marcadas_atualizacao:
-        #     # incluir dois registros em cada tupla da lista (nome da tabela e codigo do indexador)
-        #     tab_marcadas_merge = Indexadores.agregar(tabela_codigo_data_indexador,
-        #                                              tabelas_marcadas_atualizacao)
-            
-        #     print(tab_marcadas_merge)
-
-        #     if tab_marcadas_merge:
-        #         # retirar da lista de tabelas_para_processar as tabelas que nao sao de indexadores
-        #         filtrar_tabelas_indexadores = [tupla for tupla in tab_marcadas_merge if tupla[0] < 200]
-                
-        #         if filtrar_tabelas_indexadores:
-        #             print(f'Tabelas de indexadores para atualizar:')
-        #             for registro in filtrar_tabelas_indexadores:
-        #                 print(registro)                     
-
-        #             # obter os indexadores do mes que precisam ser atualizados
-        #             indexadores_do_mes, lista = self.buscar_indexadores(filtrar_tabelas_indexadores)
-
-        #             if indexadores_do_mes is not None:
-        #                 # indexadores_do_mes = [indexador, data retorno, valor, data busca']                       
-        #                 atualizados = self.inserir_novos_indexadores(indexadores_do_mes,lista)
-
-        #                 if atualizados is not None:
-        #                     for registro in atualizados:
-        #                         print(f"{registro}")                        
-        #                     return atualizados                                            
-        # return None        
-
-    
-    
-    
-
-
-    

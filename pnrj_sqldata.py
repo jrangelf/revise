@@ -13,7 +13,7 @@ class SQLData:
                 self.cursor.execute(query)
                 row = self.cursor.fetchone()
                 self.conexao.commit()
-                return row
+                return row 
         except Exception as e:
             self.conexao.rollback()            
             print(f"\nErro ao executar a consulta de selecao simples: {e}\n({query})\n")
@@ -137,7 +137,7 @@ class SQLData:
         novos_regs = []        
         try:        
             self.conexao.commit()
-            if self.cursor is not None:
+            if self.cursor is not None: 
                 for reg in registros:
                     query_substituida = self.queries.consulta_6.replace('$', str(reg[3]))                
                     self.cursor.execute(query_substituida)
@@ -189,7 +189,6 @@ class SQLData:
         
     def obter_tabelas_agendadas(self):
         registros = self.selecionar_multiplos(self.queries.consulta_9)
-        #print(f'obter_tabelas_agendadas:\n{registros}')
         return registros 
     
     def obter_ultimo_registro_da_tabela(self, nome_tabela):
@@ -314,9 +313,7 @@ class SQLData:
         except Exception as e:
             self.conexao.rollback()
             print(f"\nErro ao inserir linha na tabela selic: {e}\n({query_substituida})\n")
-            return None      
-
-
+            return None
 
     def ajustar_selic_acumulada_mensal(self, tabela, df):
         try:

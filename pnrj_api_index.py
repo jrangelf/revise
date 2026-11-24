@@ -1,13 +1,11 @@
 import json
 import requests
-from pnrj_constantes import HTTPINDICE
 
 class ApiIndex():
 
 
     def consulta_por_mes_ano(self, indexador, mes, ano):
-        #url = f"http://api-indice:8004/{indexador}/{mes}/{ano}"
-        url = f"{HTTPINDICE}{indexador}/{mes}/{ano}"
+        url = f"http://api-indice:8004/{indexador}/{mes}/{ano}"
         try:
             response = requests.get(url)    
             if response.status_code == 200:
@@ -17,8 +15,10 @@ class ApiIndex():
                     return data, valor
                 else:
                     return item
+            
             elif response.status_code == 404:
-                print(f"Índice não disponível para o mês subsequente")
+                print(f"Índice não encontradao na API de Índices PNRJ. Código de status: {response.status_code}")
+
             else:
                 print(f"Erro ao acessar a API. Código de status: {response.status_code}")
                 return None
@@ -28,8 +28,7 @@ class ApiIndex():
 
 
     def consulta_por_periodo(self, indexador, mes_inicial, ano_inicial, mes_final, ano_final):
-        #url = f'http://api-indice:8004/{indexador}/periodo?mes_inicial={mes_inicial}&ano_inicial={ano_inicial}&mes_final={mes_final}&ano_final={ano_final}'
-        url = f'{HTTPINDICE}{indexador}/periodo?mes_inicial={mes_inicial}&ano_inicial={ano_inicial}&mes_final={mes_final}&ano_final={ano_final}'
+        url = f'http://api-indice:8004/{indexador}/periodo?mes_inicial={mes_inicial}&ano_inicial={ano_inicial}&mes_final={mes_final}&ano_final={ano_final}'
         try:
             response = requests.get(url)        
             if response.status_code == 200:

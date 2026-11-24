@@ -14,6 +14,16 @@ class Juros:
         if not self.datetools.verificar_data_atualizacao(codigo, hoje, data):
             return self.tabelas.zerar_processar(codigo, str(data))
                         
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     def atualizar_tabela_poupanca(self, indexador, tabela, codigo, data, proximo_mes, mes, ano, hoje):
         reg_selic = self.apiindex.consulta_por_mes_ano(indexador.lower(), mes, ano)
         if reg_selic:
@@ -34,6 +44,8 @@ class Juros:
                         return atualizada
         return None
  
+    
+    
     
     def atualizar_tabela_selic(self, indexador, tabela, codigo, proximo_mes, 
                                mes, ano, hoje, ultimo_registro):
@@ -168,9 +180,35 @@ class Juros:
                             self.zerar_processar(codigo, hoje, proximo_mes)                    
                             return reg
 
-        return None
-
+        return None   
     
+    def atualizar_tabela_juros_taxa_legal(self, indexador, tabela, codigo, proximo_mes, 
+                               mes, ano, hoje, ultimo_registro):
+        
+        ''' aqui devemos buscar o valor do indexador taxalegal no mes corrente,
+            em vez de buscar do mes subsequente. Isso porque na taxa legal, o primeiro
+            mes (agosto de 2024) inicia-se com valor zero. Assim, o valor da taxa legal
+            do mes X sera o do mes X-1
+        '''        
+        mes_anterior = self.datetools.decrementa_mes_obj(proximo_mes)
+        print(f"mes anterior: {mes_anterior}")
+        
+        #reg_taxa_legal = self.apiindex.consulta_por_mes_ano(indexador.lower(), proximo_mes.month, proximo_mes.year)
+        reg_taxa_legal = self.apiindex.consulta_por_mes_ano(indexador.lower(), mes_anterior.month, mes_anterior.year)
+                
+        if reg_taxa_legal:
+            taxa_mensal = float(reg_taxa_legal[1])
+            ultimo_registro = self.tabelas.obter_ultimo_registro_da_tabela(tabela)
+            juros_acum = float(ultimo_registro[3])
+            novos_juros_acumulados = round(taxa_mensal + juros_acum,6)          
+             
+            atualizada = self.tabelas.inserir_linha_tabela_juros(tabela,proximo_mes,
+                                                                 taxa_mensal,novos_juros_acumulados)
+            if atualizada:                
+                self.zerar_processar(codigo, hoje, proximo_mes)                    
+                return atualizada
+                    
+        return [] 
 
     def atualizar_tabela_juros(self, indexador, tabela, codigo, proximo_mes, 
                                mes, ano, hoje, ultimo_registro):
@@ -249,10 +287,11 @@ class Juros:
                 reg = self.atualizar_tabela_selic(indexador, tabela, codigo, proximo_mes,
                                                    mes, ano, hoje, ultimo_registro)
             
-            # elif codigo == 334: # selic de creditos a partir de 2003
-            #     reg = self.atualizar_tabela_selic_credito(indexador, tabela, codigo, proximo_mes,
-            #                                         mes, ano, hoje, ultimo_registro)
-
+            elif codigo == 314 or codigo == 336:                 
+               
+                reg = self.atualizar_tabela_juros_taxa_legal(indexador, tabela, codigo, proximo_mes,
+                                                   mes, ano, hoje, ultimo_registro)
+                
             elif codigo == 326:
                 indexador = 't326_juros'    
                 reg = self.atualizar_tabela_juros_um_porcento(indexador, tabela, codigo, proximo_mes,

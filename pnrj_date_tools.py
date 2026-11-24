@@ -18,6 +18,14 @@ class DateTools:
         data_proximo_mes = data.replace(day=1) + timedelta(days=32)
         data_proximo_mes_formatado = data_proximo_mes.strftime('01/%m/%Y')
         return data_proximo_mes_formatado
+    
+    def decrementa_mes_str(self, data_str):
+        # Converter a string de data para um objeto datetime
+        data = datetime.strptime(data_str, '%d/%m/%Y')
+        # Ir para o dia 1 do mês atual e voltar 1 dia (último dia do mês anterior)
+        data_mes_anterior = data.replace(day=1) - timedelta(days=1)
+        data_mes_anterior_formatado = data_mes_anterior.strftime('01/%m/%Y')
+        return data_mes_anterior_formatado
 
     def formatar_dmy_para_ymd(self, data_str):
         ''' converte a string 01/07/2023 em 2023-07-01 '''
@@ -56,6 +64,18 @@ class DateTools:
             dia = min(data.day, (data.replace(month=mes, year=ano) - timedelta(days=1)).day)        
             data_incrementada = data.replace(year=ano, month=mes, day=1)        
             return data_incrementada
+        
+    def decrementa_mes_obj(self, data):
+        ''' converte 2023-08-01 00:00:00+0000 em 2023-07-01 00:00:00+0000'''
+        if data is not None:
+            if data.month == 1:
+                ano = data.year - 1
+                mes = 12
+            else:
+                ano = data.year
+                mes = data.month - 1
+            data_decrementada = data.replace(year=ano, month=mes, day=1)
+            return data_decrementada
     
 
 

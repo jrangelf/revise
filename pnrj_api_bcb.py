@@ -24,6 +24,10 @@ class ApiBcb():
                     'valor': valor
                 })            
             return df
+        
+        elif response.status_code == 404:
+                print(f"Índice não encontradao na API do Banco Central. Código de status: {response.status_code}")
+
         else:
             print(f"Erro ao acessar a API. Código de status: {response.status_code}")
             return None
@@ -65,16 +69,37 @@ class ApiBcb():
                     data = json.loads(response.text)
                     return data
                 except:
-                    return None 
-            else:                
-                erro = response.json().get("erro")
-                if erro:
-                    detail = erro.get("detail", "Detalhe não encontrado")
+                    return None
+
+            elif response.status_code == 404:
+                print(f"Índice não encontradao na API do Banco Central. Código de status: {response.status_code}")
+                 
+            # else:                
+            #     erro = response.json().get("erro")
+            #     if erro:
+            #         detail = erro.get("detail", "Detalhe não encontrado")
+            #         print(f"\nÍndice não encontrado.\nurl: {url}\nCódigo de status: {response.status_code}\n{detail}\n[consultar_bc_periodo]\n")
+            #         return "not found"
+            #     else:
+            #         print("Nenhuma informação de erro encontrada.")
+            #     return "not info"
+
+            else:
+               erro = response.json().get("erro")
+               if erro:
+                    if isinstance(erro, dict):
+                        detail = erro.get("detail", "Detalhe não encontrado")
+                    else:
+                        detail = str(erro)
+
                     print(f"\nÍndice não encontrado.\nurl: {url}\nCódigo de status: {response.status_code}\n{detail}\n[consultar_bc_periodo]\n")
                     return "not found"
-                else:
+               else:
                     print("Nenhuma informação de erro encontrada.")
-                return "not info"
+               return "not info" 
+
+
+
             
         except requests.Timeout:
             print(f"A solicitação {codigo_bcb} excedeu o tempo limite.\n[consultar_bc_periodo]")

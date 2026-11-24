@@ -15,6 +15,5 @@ IPCA = config('IPCA')
 IPCA15 = config('IPCA15')
 SELICCOPOM = config('SELICCOPOM')
 TR = config('TR')
-
-HTTPINDICE = config('HTTPINDICE')
+TXLEGAL = config('TXLEGAL')
 
